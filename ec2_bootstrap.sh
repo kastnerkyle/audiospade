@@ -8,9 +8,17 @@ sudo apt-get install fail2ban
 sudo useradd deploy
 sudo mkdir /home/deploy
 sudo mkdir /home/deploy/.ssh
-sudo chmod 700 /home/deploy/.ssh
+sudo chmod 755 /home/deploy/.ssh
 sudo touch /home/deploy/.ssh/authorized_keys
+sudo chmod 644 /home/deploy/.ssh/authorized_keys
 sudo chmod deploy:deploy /home/deploy -R
 for i in 22 80 443; do
-    sudo ufw $i allow 
+    sudo ufw allow $i
 done
+
+sudo apt-get install python-dev python-virtualenv libpq-dev postgresql python-pip
+virtualenv venv
+cd venv
+git clone git://github.com/esbullington/flask-bootstrap.git
+bin/pip install -r flask-boostrap/requirements.txt
+
